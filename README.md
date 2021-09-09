@@ -9,6 +9,7 @@ This app is used to create a custom resume based on selected keywords.
 4. Open a terminal, `cd` into the folder containing ResumeMaker.jar, and run `java -jar ResumeMaker.jar <keywords>`, replacing `<keywords>` with any relevant keywords from the available options.
     - The available keywords are "Java", "C", "WebDesign", "ComputerHardware", and "Python".
     - A list of available keywords can also be found by running `java -jar ResumeMaker.jar --help`.
+5. If prompted to install needed LaTeX packages, click Install on each prompt.
     
 #### Making your own resume:
 1. Download the src folder.
