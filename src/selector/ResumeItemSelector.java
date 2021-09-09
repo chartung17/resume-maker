@@ -2,7 +2,7 @@ package selector;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +19,7 @@ import resume_items.ResumeItem;
 public class ResumeItemSelector {
 	private int length = 0;
 	private int maxLength;
-	private final Set<ResumeItem> itemsToUse = new HashSet<>();
+	private final Map<ResumeItem, Integer> itemsToUse = new HashMap<>();
 	private final List<ResumeItem> list;
 
 	/**
@@ -31,23 +31,19 @@ public class ResumeItemSelector {
 	public ResumeItemSelector(ResumeInfo info, String[] keywords) {
 		Map<String, Set<ResumeItem>> map = info.getJobsAndProjectsByKeyword();
 		list = info.getJobsAndProjects();
-		Set<ResumeItem> next = map.get(null);
-		if (next != null)
-			itemsToUse.addAll(next);
+		merge(map.get(null));
 		for (String keyword : keywords) {
-			next = map.get(keyword);
-			if (next != null)
-				itemsToUse.addAll(next);
+			merge(map.get(keyword));
 		}
 
 		maxLength = info.getAvailableLines();
-		for (ResumeItem item : itemsToUse) {
+		for (ResumeItem item : itemsToUse.keySet()) {
 			length += item.getLength();
 		}
 		if (length > maxLength) {
 			for (int i = list.size() - 1; i >= 0; i--) {
 				ResumeItem item = list.get(i);
-				if (itemsToUse.remove(item)) {
+				if (itemsToUse.remove(item) != null) {
 					length -= item.getLength();
 					if (length <= maxLength)
 						break;
@@ -57,13 +53,21 @@ public class ResumeItemSelector {
 		if (length < maxLength) {
 			for (int i = 0; i < list.size(); i++) {
 				ResumeItem item = list.get(i);
-				if (length + item.getLength() <= maxLength) {
-					if (itemsToUse.add(item)) {
-						length += item.getLength();
-						if (length == maxLength)
-							break;
-					}
+				if ((length + item.getLength() <= maxLength) && !itemsToUse.containsKey(item)) {
+					itemsToUse.put(item, 0);
+					length += item.getLength();
+					if (length == maxLength)
+						break;
+
 				}
+			}
+		}
+	}
+
+	private void merge(Set<ResumeItem> next) {
+		if (next != null) {
+			for (ResumeItem item : next) {
+				itemsToUse.merge(item, 1, (a, b) -> a + b);
 			}
 		}
 	}
@@ -77,7 +81,7 @@ public class ResumeItemSelector {
 	 */
 	public List<Job> selectJobs() {
 		List<Job> jobs = new ArrayList<>();
-		for (ResumeItem item : itemsToUse) {
+		for (ResumeItem item : itemsToUse.keySet()) {
 			if (item instanceof Job)
 				jobs.add((Job) item);
 		}
@@ -86,6 +90,8 @@ public class ResumeItemSelector {
 				return b.getEndYear() - a.getEndYear();
 			if (a.getStartYear() != b.getStartYear())
 				return b.getStartYear() - a.getStartYear();
+			if (itemsToUse.get(a) != itemsToUse.get(b))
+				return itemsToUse.get(b) - itemsToUse.get(a);
 			return list.indexOf(a) - list.indexOf(b);
 		});
 		return jobs;
@@ -100,13 +106,15 @@ public class ResumeItemSelector {
 	 */
 	public List<Project> selectProjects() {
 		List<Project> projects = new ArrayList<>();
-		for (ResumeItem item : itemsToUse) {
+		for (ResumeItem item : itemsToUse.keySet()) {
 			if (item instanceof Project)
 				projects.add((Project) item);
 		}
 		Collections.sort(projects, (a, b) -> {
 			if (a.getYear() != b.getYear())
 				return b.getYear() - a.getYear();
+			if (itemsToUse.get(a) != itemsToUse.get(b))
+				return itemsToUse.get(b) - itemsToUse.get(a);
 			return list.indexOf(a) - list.indexOf(b);
 		});
 		return projects;

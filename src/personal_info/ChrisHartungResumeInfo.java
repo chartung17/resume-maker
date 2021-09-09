@@ -19,8 +19,8 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 			"Processed data from satellite ground stations for the GPS Next-Generation Operational Control System"
 					+ " (GPS OCX)",
 			"Developed programming skills in Java and Python");
-	private static final Job HEAD_TA = new Job("Head Teaching Assistant", "University of Pennsylvania",
-			"Philadelphia, PA", 2021, 2021,
+	private static final Job HEAD_TA = new Job("Head Teaching Assistant",
+			"University of Pennsylvania", "Philadelphia, PA", 2021, 2021,
 			"Led team of 12 teaching assistants, assigned grading, and assisted teaching assistants with grading when needed",
 			"Assisted with grading homework assignments and exams and processing regrade requests",
 			"Instructed students in algorithms through office hours (2 hours weekly), recitations (weekly), and "
@@ -63,6 +63,10 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 	private static final Project ELECTECON = new Project("ElectEcon", "University of Pennsylvania",
 			2020, "Developed a web app to analyze patterns in election and GDP data using "
 					+ "React.js, Node.js, and MySQL. Source code at github.com/chartung17/electecon");
+	private static final Project TESTS = new Project("Test Suite", "University of Pennsylvania",
+			2020,
+			"Developed C++ programs using the LLVM compiler infrastructure to perform both dynamic and static analysis"
+					+ " to detect divide-by-zero errors");
 	private static final Project PORTFOLIO = new Project("Portfolio", "freeCodeCamp", 2020,
 			"Wrote web pages using HTML, CSS, Javascript, and React. Portfolio and links to other projects"
 					+ " at chartung17.github.io");
@@ -77,11 +81,19 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 	private static final Project ASSEMBLER = new Project("Assembler/Disassembler",
 			"University of Pennsylvania", 2020,
 			"Designed two C programs to translate from assembly to machine code and vice versa for the LC4 computer");
-	private static final Project GO = new Project("Go Game", "University of Pennsylvania", 2020,
+	private static final Project GO = new Project("Go Game", "University of Pennsylvania", 2019,
 			"Programmed portions of a game of Go in Java, including a user interface "
 					+ "developed with the Swing toolkit and a single-player mode utilizing multithreading. "
 					+ "Game and source code at  chartung17.github.io/gogame.html");
-	
+	private static final Project HEART = new Project("Heart Disease Predictor",
+			"University of Pennsylvania", 2020,
+			"Wrote Python program to predict occurences of heart disease based on other health factors, utilizing"
+					+ " the numpy, pandas, and sklearn packages.");
+	private static final Project ROBOT = new Project("Potential Field Controller",
+			"University of Pennsylvania", 2021,
+			"Wrote a Python programming which uses artificial potential fields to navigate a simulated robot from"
+					+ " its starting position to a given target while avoiding both static and dynamic obstacles");
+
 	// correct length estimates
 	static {
 		PORTFOLIO.setLength(2);
@@ -122,17 +134,18 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 
 	@Override
 	public List<ResumeItem> getJobsAndProjects() {
-		return Arrays.asList(RAYTHEON, HEAD_TA, TA, ANALYST, PHOTOMOSAIC, CHESS, ELECTECON, ASSEMBLER,
-				PORTFOLIO, GO, HANDSHAKE, SUDOKU, PARKING, EASTCOR, INVENTORY);
+		return Arrays.asList(RAYTHEON, HEAD_TA, TA, ANALYST, PHOTOMOSAIC, CHESS, ELECTECON,
+				ASSEMBLER, PORTFOLIO, TESTS, ROBOT, GO, HEART, HANDSHAKE, SUDOKU, PARKING, EASTCOR,
+				INVENTORY);
 	}
 
 	@Override
 	public Map<String, Set<ResumeItem>> getJobsAndProjectsByKeyword() {
 		Map<String, Set<ResumeItem>> map = new HashMap<>();
 		map.put(null, new HashSet<>(Arrays.asList(RAYTHEON, HEAD_TA, TA, ANALYST)));
-		map.put("C", new HashSet<>(Arrays.asList(SUDOKU, HANDSHAKE, ASSEMBLER)));
+		map.put("C", new HashSet<>(Arrays.asList(SUDOKU, HANDSHAKE, ASSEMBLER, TESTS)));
 		map.put("Java", new HashSet<>(Arrays.asList(PHOTOMOSAIC, CHESS, PARKING, GO)));
-		map.put("Python", new HashSet<>(Arrays.asList(SUDOKU)));
+		map.put("Python", new HashSet<>(Arrays.asList(SUDOKU, HEART, ROBOT)));
 		map.put("WebDesign", new HashSet<>(Arrays.asList(ELECTECON, PORTFOLIO)));
 		map.put("ComputerHardware", new HashSet<>(Arrays.asList(EASTCOR, INVENTORY)));
 		return map;
