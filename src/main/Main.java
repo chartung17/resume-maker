@@ -99,7 +99,7 @@ public class Main {
 			
 			// write resume header
 			pw.print(info.getName());
-			pw.print("}\n" + "    \\vspace{3px}\n" + "    \n" + "    ");
+			pw.print("}\n    \\vspace{3px}\n    \n    ");
 			String addressLine1 = info.getAddressLine1();
 			String addressLine2 = info.getAddressLine2();
 			String phone = info.getPhone();
@@ -119,17 +119,20 @@ public class Main {
 					+ "\\end{center}\n"
 					+ "\\vspace{-10px}\n"
 					+ "\n"
-					+ "\\sectionheader{EDUCATION}\n" + "\n");
+					+ "\\sectionheader{EDUCATION}\n"
+					+ "\n");
 			
 			// write Education section
 			for (Degree degree : info.getDegrees()) {
 				pw.print(degree);
 			}
 			
-			// write Certifications section
-			pw.print("\\sectionheader{CERTIFICATIONS}\n\n");
-			for (Certification certification : info.getCertifications()) {
-				pw.print(certification);
+			// write Certifications section if applicable
+			if (info.getCertifications() != null) {
+				pw.print("\\sectionheader{CERTIFICATIONS}\n\n");
+				for (Certification certification : info.getCertifications()) {
+					pw.print(certification);
+				}
 			}
 			
 			// write Technical Skills section

@@ -74,7 +74,9 @@ public interface ResumeInfo {
 	 * @return the number of lines of text that are available to be used by jobs or projects
 	 */
 	public default int getAvailableLines() {
-		return 41 - getDegrees().length - getCertifications().length - getTechnicalSkills().length;
+		return 41 - getDegrees().length
+				- ((getCertifications() == null) ? -2 : getCertifications().length)
+				- getTechnicalSkills().length;
 	}
 
 	/**
@@ -90,10 +92,12 @@ public interface ResumeInfo {
 	/**
 	 * This method returns an array containing all of the Certifications that will be displayed in
 	 * the Certifications section of the resume. The Certifications in this array will be displayed
-	 * in the order they are given, regardless of the user's selected keywords.
+	 * in the order they are given, regardless of the user's selected keywords. If there are no
+	 * relevant certifications, this method returns null.
 	 * 
 	 * @return an array containing all of the Certifications that will be displayed in the
-	 *         Certifications section of the resume
+	 *         Certifications section of the resume, or null if there are no certifications to
+	 *         display
 	 */
 	public Certification[] getCertifications();
 

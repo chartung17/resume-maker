@@ -88,7 +88,7 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 	private static final Project HEART = new Project("Heart Disease Predictor",
 			"University of Pennsylvania", 2020,
 			"Wrote Python program to predict occurences of heart disease based on other health factors, utilizing"
-					+ " the numpy, pandas, and sklearn packages.");
+					+ " the numpy, pandas, and sklearn packages");
 	private static final Project ROBOT = new Project("Potential Field Controller",
 			"University of Pennsylvania", 2021,
 			"Wrote a Python programming which uses artificial potential fields to navigate a simulated robot from"
