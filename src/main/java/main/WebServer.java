@@ -20,13 +20,24 @@ import selector.ResumeItemSelector;
 @SpringBootApplication
 public class WebServer {
 	private static ResumeInfo info = new ChrisHartungResumeInfo();
+	
+	/**
+	 * This method returns a link to the default resume with no keywords selected.
+	 * 
+	 * @return a link to the default resume
+	 */
+	@RequestMapping(value = "/compile", method = RequestMethod.GET)
+	@CrossOrigin
+	public static String compileDefault() {
+		return compile("");
+	}
 
 	/**
-	 * This method returns a link to a resume built based keywords specified in the URL. If multiple
+	 * This method returns a link to a resume built based on keywords specified in the URL. If multiple
 	 * keywords are specified, they should be separated by dashes.
 	 * 
 	 * @param keywordsStr the keywords to use, separated by dashes
-	 * @returna link to a resume built based keywords specified in the URL
+	 * @return a link to a resume built based keywords specified in the URL
 	 */
 	@RequestMapping(value = "/compile/{keywordsStr}", method = RequestMethod.GET)
 	@CrossOrigin
