@@ -41,6 +41,12 @@ public class WebServer {
 		// return error message if an error occurs in writing the tex file
 		catch (IOException e) {
 			return "{\"status\":500, \"message\":\"error in writing tex file\"}";
+		} catch (Exception e) {
+			System.out.println(keywordsStr);
+			System.out.println(keywords);
+			System.out.println(selector);
+			System.out.println(info);
+			return null;
 		}
 	}
 
