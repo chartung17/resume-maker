@@ -35,8 +35,8 @@ public class WebServer {
 		ResumeItemSelector selector = new ResumeItemSelector(info, keywords);
 		try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
 			Main.printTexFile(pw, info, selector);
-			return "{\"status\":200, \"link\":\"" + URLEncoder.encode(sw.toString(), "UTF-8")
-					+ "\"}";
+			return "{\"status\":200, \"link\":\"https://latexonline.cc/compile?text="
+					+ URLEncoder.encode(sw.toString(), "UTF-8") + "\"}";
 		}
 		// return error message if an error occurs in writing the tex file
 		catch (IOException e) {
