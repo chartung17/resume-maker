@@ -19,6 +19,6 @@ This app is used to create a custom resume based on selected keywords.
 #### Making your own resume:
 1. Download the src folder.
 2. Create a new class in the personal_info package which implements ResumeInfo and implement all required methods in that class.
-3. Modify the first line of the main method in the Main class to use your ResumeInfo implementation.
+3. Modify the first line of the Main class to use your ResumeInfo implementation.
 4. Package the program as a runnable JAR file. Instructions for doing this in [Eclipse](https://www.eclipse.org/downloads/) can be found [here](https://www.wikihow.com/Create-an-Executable-File-from-Eclipse).
-5. Run the JAR file as described above.
+5. Run the JAR file as described in the "Running the desktop app" section above.
