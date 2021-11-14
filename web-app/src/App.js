@@ -25,7 +25,6 @@ export default class App extends React.Component {
       // Print the error if there is one.
       console.log(err);
     }).then(result => {
-      console.log(result);
       if (result === undefined) {
         console.log('Unknown error occurred');
         return;
@@ -34,7 +33,12 @@ export default class App extends React.Component {
         keywords = keywords.map(s => s.replace(/[A-Z]/g, c => ' ' + c).trim());
         let checkboxes = [];
         for (let i = 0; i < keywords.length; i++) {
-          checkboxes.push(<span><input type={'checkbox'} key={i} onChange={this.handleCheck(i)} value={keywords[i]}/>{keywords[i]}</span>);
+          checkboxes.push(
+            <div className="Checkbox" key={i}>
+            <input type={'checkbox'} key={i} onChange={this.handleCheck(i)} value={keywords[i]}/>
+            {keywords[i]}
+            </div>
+          );
         }
         this.setState({
           ready: true,
@@ -42,7 +46,6 @@ export default class App extends React.Component {
           selected: keywords.map(s => false),
           checkboxes: checkboxes
         });
-        console.log(this.state.checkboxes);
       }
     });
   }
@@ -66,7 +69,6 @@ export default class App extends React.Component {
         selectedKeywords.push(keywords[i].replace(/ /g, ''));
       }
     }
-    console.log('https://chartung17-resume-maker.herokuapp.com/compile/' + selectedKeywords.join('-'));
     fetch("https://chartung17-resume-maker.herokuapp.com/compile/" + selectedKeywords.join('-'), {
       method: 'GET'
     })
@@ -82,7 +84,7 @@ export default class App extends React.Component {
       } else if (result['status'] === 200) {
         let link = result['link'];
         this.setState({
-          link: <a href={link}>Open Resume</a>
+          link: <a href={link} target="_blank" rel="noreferrer">Open Resume</a>
         });
       }
     });
@@ -92,8 +94,9 @@ export default class App extends React.Component {
     return (
       <div className="App">
       <header className="App-header">
-      <p>{this.state.ready ? '' : 'Loading'}</p>
-      {this.state.checkboxes}
+      <h1>Resume Maker</h1>
+      <p>{this.state.ready ? 'Please select all relevant keywords and then click the Compile button.' : 'Loading'}</p>
+      <div className="checkboxes">{this.state.checkboxes}</div>
       <button onClick={this.handleClick}>Compile</button>
       {this.state.link}
       </header>

@@ -12,15 +12,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
-import personal_info.ChrisHartungResumeInfo;
-import personal_info.ResumeInfo;
-import selector.ResumeItemSelector;
-
 @RestController
 @SpringBootApplication
 public class WebServer {
-	private static ResumeInfo info = new ChrisHartungResumeInfo();
-	
 	/**
 	 * This method returns a link to the default resume with no keywords selected.
 	 * 
@@ -33,8 +27,8 @@ public class WebServer {
 	}
 
 	/**
-	 * This method returns a link to a resume built based on keywords specified in the URL. If multiple
-	 * keywords are specified, they should be separated by dashes.
+	 * This method returns a link to a resume built based on keywords specified in the URL. If
+	 * multiple keywords are specified, they should be separated by dashes.
 	 * 
 	 * @param keywordsStr the keywords to use, separated by dashes
 	 * @return a link to a resume built based keywords specified in the URL
@@ -43,9 +37,8 @@ public class WebServer {
 	@CrossOrigin
 	public static String compile(@PathVariable String keywordsStr) {
 		String[] keywords = keywordsStr.split("-");
-		ResumeItemSelector selector = new ResumeItemSelector(info, keywords);
 		try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
-			Main.printTexFile(pw, info, selector);
+			Main.printTexFile(pw, keywords);
 			return "{\"status\":200, \"link\":\"https://latexonline.cc/compile?text="
 					+ URLEncoder.encode(sw.toString(), "UTF-8") + "\"}";
 		}
@@ -63,7 +56,7 @@ public class WebServer {
 	@RequestMapping(value = "/help", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String help() {
-		Set<String> keySet = info.getJobsAndProjectsByKeyword().keySet();
+		Set<String> keySet = Main.INFO.getJobsAndProjectsByKeyword().keySet();
 		keySet.remove(null);
 		List<String> keywords = new ArrayList<>(keySet);
 		keywords.replaceAll(s -> '\"' + s + '\"');

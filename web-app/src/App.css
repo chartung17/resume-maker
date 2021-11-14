@@ -2,6 +2,33 @@
   text-align: center;
 }
 
+.Checkbox {
+  display: flex;
+  justify-content: flex-start;
+}
+
+input {
+  margin: 15px;
+}
+
+button {
+  font-size: calc(10px + 2vmin);
+  margin: 20px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  max-width: 500px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

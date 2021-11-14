@@ -11,6 +11,9 @@ import selector.ResumeItemSelector;
  * This class is used to run the resume maker.
  */
 public class Main {
+	public static ResumeInfo INFO = new ChrisHartungResumeInfo(); // change this line to construct
+																	// someone else's resume
+
 	/**
 	 * This method runs the resume maker.
 	 * 
@@ -18,15 +21,12 @@ public class Main {
 	 *                 program.
 	 */
 	public static void main(String[] keywords) {
-		ResumeInfo info = new ChrisHartungResumeInfo(); // change this line to construct someone
-														// else's resume
-
 		// display help info when --help is used
 		if ((keywords.length == 1) && ("--help".equals(keywords[0]))) {
 			System.out.println(
 					"To construct a resume, run this program with any relevant keywords as command line arguments.");
 			System.out.println("The following keywords are available:");
-			for (String keyword : info.getJobsAndProjectsByKeyword().keySet()) {
+			for (String keyword : INFO.getJobsAndProjectsByKeyword().keySet()) {
 				if (keyword != null)
 					System.out.print("\"" + keyword + "\" ");
 			}
@@ -35,10 +35,9 @@ public class Main {
 		}
 
 		// write tex file
-		String texFile = info.getFileName() + ".tex";
-		ResumeItemSelector selector = new ResumeItemSelector(info, keywords);
+		String texFile = INFO.getFileName() + ".tex";
 		try (PrintWriter pw = new PrintWriter(texFile)) {
-			printTexFile(pw, info, selector);
+			printTexFile(pw, keywords);
 		}
 		// display error message if an error occurs in writing the tex file
 		catch (IOException e) {
@@ -50,28 +49,30 @@ public class Main {
 		PdfWriter.printPdf(texFile);
 	}
 
-	public static void printTexFile(PrintWriter pw, ResumeInfo info, ResumeItemSelector selector)
+	public static void printTexFile(PrintWriter pw, String[] keywords)
 			throws IOException {
+		ResumeItemSelector selector = new ResumeItemSelector(INFO, keywords);
+		
 		// write header
-		Header.printHeader(pw, info);
+		Header.printHeader(pw, INFO);
 
 		// write Education section
 		pw.print("\\sectionheader{EDUCATION}\n\n");
-		for (Degree degree : info.getDegrees()) {
+		for (Degree degree : INFO.getDegrees()) {
 			pw.print(degree);
 		}
 
 		// write Certifications section if applicable
-		if (info.getCertifications() != null) {
+		if (INFO.getCertifications() != null) {
 			pw.print("\\sectionheader{CERTIFICATIONS}\n\n");
-			for (Certification certification : info.getCertifications()) {
+			for (Certification certification : INFO.getCertifications()) {
 				pw.print(certification);
 			}
 		}
 
 		// write Technical Skills section
 		pw.print("\\sectionheader{TECHNICAL SKILLS}\n" + "\n" + "\\begin{tabular}{ @{} ");
-		TechnicalSkill[][] skills = info.getTechnicalSkills();
+		TechnicalSkill[][] skills = INFO.getTechnicalSkills();
 		int numRows = skills.length;
 		int numCols = skills[0].length;
 		for (int i = 0; i < numCols; i++) {
