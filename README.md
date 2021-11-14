@@ -2,7 +2,12 @@
 
 This app is used to create a custom resume based on selected keywords.
 
-#### Running the app:
+#### Running the web app:
+1. Open the app [here](https://chartung17.github.io/resume-maker/).
+2. Select any relevant keywords and then click the Compile button.
+3. Click the "Open Resume" link when it appears to open the resume in a new tab.
+
+#### Running the desktop app:
 1. Verify that a TeX distribution is installed by opening a terminal and running `pdflatex --version`. If the command is not recognized, download [MiKTeX](https://miktex.org/download).
 2. Verify that a Java Runtime Environment (JRE) is installed by opening a terminal and running `java -version`. If the command is not recognized, or if the version is earlier than 1.8, download a [JRE](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
 3. Download ResumeMaker.jar.
@@ -10,7 +15,7 @@ This app is used to create a custom resume based on selected keywords.
     - The available keywords are "Java", "C", "Data", "WebDesign", "ComputerHardware", and "Python".
     - A list of available keywords can also be found by running `java -jar ResumeMaker.jar --help`.
 5. If prompted to install needed LaTeX packages, click Install on each prompt.
-    
+
 #### Making your own resume:
 1. Download the src folder.
 2. Create a new class in the personal_info package which implements ResumeInfo and implement all required methods in that class.
