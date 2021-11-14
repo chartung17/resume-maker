@@ -95,7 +95,7 @@ public class ChrisHartungResumeInfo implements ResumeInfo {
 					+ " its starting position to a given target while avoiding both static and dynamic obstacles");
 	private static final Project STEGANOGRAPHY = new Project("Steganography", 2021,
 			"Developed program with React front end and Java back end to hide messages within image files. Web app at "
-			+ "\n\nchartung17.github.io/steganography and source code at github.com/chartung17/steganography");
+			+ "\n\n chartung17.github.io/steganography and source code at github.com/chartung17/steganography");
 
 	// correct length estimates
 	static {
